@@ -1,0 +1,19 @@
+version: "3"
+services:
+  nodejs-server:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    command: sh -c "npm install typescript && npm install && rm -R dist && npm run build && cp -R src/public dist/public && npm start"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  minio_data:
